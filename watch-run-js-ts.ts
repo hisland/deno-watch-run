@@ -1,5 +1,3 @@
-// deno run -A z-deno-watch-reload.js
-
 import * as Colors from "https://deno.land/std@0.151.0/fmt/colors.ts";
 import {
   basename,
@@ -8,33 +6,31 @@ import {
 } from "https://deno.land/std@0.151.0/path/mod.ts";
 
 const __filepath = new URL("", import.meta.url).pathname;
-console.log("__filepath: ", __filepath);
+// console.log("__filepath: ", __filepath);
 const __filename = basename(__filepath);
-console.log("__filename: ", __filename);
+// console.log("__filename: ", __filename);
 const __dirname = dirname(__filepath);
-console.log("__dirname: ", __dirname);
+// console.log("__dirname: ", __dirname);
+const cwd = Deno.cwd();
+// console.log('cwd: ', cwd);
 
 let COUNT = 1;
 
-const handle = debounce(
+const debounceHandle = debounce(
   (event: unknown) => {
     const {
-      kind,
       paths: [path],
     } = event as Deno.FsEvent;
-    // console.log("event: ", event);
-    // console.log("kind: ", kind);
-    // console.log("path: ", path);
-    // if (!["create", "modify"].includes(kind)) return;
-    // if (!/\.[jt]s/.test(path)) return;
 
+    // console.log("path: ", path);
     const filename = basename(path);
-    console.log("filename: ", filename);
-    const relative_file = relative(__dirname, path);
-    console.log("relative_file: ", relative_file);
+    // console.log("filename: ", filename);
+    const relative_file = relative(cwd, path);
+    // console.log("relative_file: ", relative_file);
     try {
       Deno.lstatSync(relative_file);
     } catch (err) {
+      // console.log('err: ', err);
       if (err instanceof Deno.errors.NotFound) {
         return false;
       }
@@ -64,9 +60,16 @@ async function run() {
       kind,
       paths: [path],
     } = event;
-    if (!["create", "modify"].includes(kind)) continue;
+    if (
+      ![
+        // "create",
+        "modify",
+      ].includes(kind)
+    ) {
+      continue;
+    }
     if (!/\.[jt]s/.test(path)) continue;
-    handle(event);
+    debounceHandle(event);
   }
 }
 
