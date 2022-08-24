@@ -15,6 +15,7 @@ const cwd = Deno.cwd();
 // console.log('cwd: ', cwd);
 
 let COUNT = 1;
+let pp: Deno.Process;
 
 const debounceHandle = debounce(
   (event: unknown) => {
@@ -39,7 +40,11 @@ const debounceHandle = debounce(
     console.log(
       `\n${Colors.red("[" + (COUNT++) + "] reload")} ${relative_file}: \n`,
     );
-    Deno.run({
+    if (pp) {
+      pp.kill('SIGTERM')
+      pp.close()
+    }
+    pp = Deno.run({
       cmd: [
         `deno`,
         `run`,
@@ -47,6 +52,7 @@ const debounceHandle = debounce(
         `${relative_file}`,
       ],
     });
+    // console.log(pp);
   },
   100,
   true,
