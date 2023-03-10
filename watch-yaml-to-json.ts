@@ -42,10 +42,15 @@ const debounceHandle = debounce(
       `\n${Colors.red("[" + (COUNT++) + "] reload")} ${relative_file}: \n`,
     );
 
-    const fileText = Deno.readTextFileSync(relative_file)
-    const rs1 = YAML.parse(fileText)
-    const rs2 = JSON.stringify(rs1, null, ' ')
-    console.log('rs2: ', rs2);
+    try {
+      const fileText = Deno.readTextFileSync(relative_file)
+      const rs1 = YAML.parse(fileText)
+      const rs2 = JSON.stringify(rs1, null, ' ')
+      console.log('rs2: ', rs2);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+
   },
   100,
   true,
