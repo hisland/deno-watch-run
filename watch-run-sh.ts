@@ -42,8 +42,11 @@ const debounceHandle = debounce(
     );
 
     if (pp) {
-      pp.kill('SIGTERM')
-      pp.close()
+      try {
+        pp.kill('SIGTERM')
+        pp.close()
+      } catch (error) {
+      }
     }
     pp = Deno.run({
       cmd: [
