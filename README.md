@@ -3,6 +3,10 @@
 1. 打开 https://deno.land/x 点击 **Publish a module** 得到一个 webhook 链接
 2. 打开 git 仓库, Settings 里面的 Webhooks 添加
 
+# 开发
+
+开发的时候, 执行 deno run -A watch-xxx.ts 运行
+
 # 发版
 1. 修改代码并 commit
 2. 打 tag `git tag v0.0.x`
