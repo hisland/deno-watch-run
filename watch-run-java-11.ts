@@ -1,9 +1,9 @@
-import * as Colors from "https://deno.land/std@0.151.0/fmt/colors.ts";
+import * as Colors from "https://deno.land/std@0.183.0/fmt/colors.ts";
 import {
   basename,
   dirname,
   relative,
-} from "https://deno.land/std@0.151.0/path/mod.ts";
+} from "https://deno.land/std@0.183.0/path/mod.ts";
 
 const __filepath = new URL("", import.meta.url).pathname;
 // console.log("__filepath: ", __filepath);
