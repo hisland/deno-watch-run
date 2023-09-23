@@ -72,7 +72,7 @@ async function run() {
     ) {
       continue;
     }
-    if (!/\.[j]s/.test(path)) continue;
+    if (!/\.m?js/.test(path)) continue;
     debounceHandle(event);
   }
 }
