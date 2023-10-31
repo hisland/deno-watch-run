@@ -19,7 +19,7 @@
 
 1. 安装
    `deno install -rqfA https://deno.land/x/deno_watch_run/watch-run-nodejs.ts`
-1. shell 进行目录
+1. shell 进入目录
 1. 执行 watch-run-nodejs .
 1. 修改这个目录里面的任意 mjs/js 文件, 查看控制台输出
 
@@ -27,16 +27,31 @@
 
 1. 安装
    `deno install -rqfA https://deno.land/x/deno_watch_run/watch-run-deno-js-ts.ts`
-1. shell 进行目录
-1. 执行 watch-run-js-ts .
+1. shell 进入目录
+1. 执行 watch-run-deno-js-ts .
 1. 修改这个目录里面的任意 js/ts 文件, 查看控制台输出
+
+# 用 deno 监听 sh 文件变更并执行
+
+1. 安装
+   `deno install -rqfA https://deno.land/x/deno_watch_run/watch-run-sh.ts`
+1. shell 进入目录
+1. 执行 watch-run-sh .
+1. 修改这个目录里面的任意 sh 文件, 查看控制台输出
+
+# 用 deno 监听 java 文件变更并执行
+
+1. 安装
+   `deno install -rqfA https://deno.land/x/deno_watch_run/watch-run-java-11.ts`
+1. shell 进入目录
+1. 执行 watch-run-java-11 .
+1. 修改这个目录里面的任意 java 文件, 查看控制台输出
 
 # 保存 yaml/yml 输出 json
 
 1. 安装
    `deno install -rqfA https://deno.land/x/deno_watch_run/watch-yaml-to-json.ts`
-1. shell 进行目录
+1. shell 进入目录
 1. 执行 watch-yaml-to-json .
 1. 修改这个目录里面的任意 yaml/yml 文件, 查看控制台输出
 
-# 还有 java/sh 脚本也类似, 查看源代码了解
