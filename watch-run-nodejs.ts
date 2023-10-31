@@ -15,10 +15,10 @@ const cwd = Deno.cwd();
 // console.log('cwd: ', cwd);
 
 let COUNT = 1;
-let pp: Deno.Process;
+let pp: Deno.ChildProcess;
 
 const debounceHandle = debounce(
-  (event: unknown) => {
+  async (event: unknown) => {
     const {
       paths: [path],
     } = event as Deno.FsEvent;
@@ -41,16 +41,22 @@ const debounceHandle = debounce(
       `\n${Colors.red("[" + (COUNT++) + "] reload")} ${relative_file}: \n`,
     );
     if (pp) {
-      pp.kill('SIGTERM')
-      pp.close()
+      try {
+        // console.log('kill')
+        pp.kill('SIGTERM')
+        pp.unref()
+      } catch (error) {
+        // console.log(error)
+      }
     }
-    pp = Deno.run({
-      cmd: [
-        `node`,
+    const command = new Deno.Command('node', {
+      args: [
         `${relative_file}`,
       ],
     });
-    // console.log(pp);
+    pp = command.spawn();
+    // const status = await pp.status;
+    // console.log('status: ', status);
   },
   100,
   true,
