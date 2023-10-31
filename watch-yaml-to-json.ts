@@ -42,16 +42,23 @@ const debounceHandle = debounce(
     );
 
     try {
-      const fileText = Deno.readTextFileSync(relative_file)
-      const rs1 = YAML.parse(fileText)
-      const rs2 = JSON.stringify(rs1, null, ' ')
-      console.log('rs2: ', rs2);
+      let fileText = Deno.readTextFileSync(relative_file);
+      if (!fileText) {
+        console.log("retry read 1");
+        fileText = Deno.readTextFileSync(relative_file);
+      }
+      if (!fileText) {
+        console.log("retry read 2");
+        fileText = Deno.readTextFileSync(relative_file);
+      }
+      const rs1 = YAML.parse(fileText);
+      const rs2 = JSON.stringify(rs1, null, " ");
+      console.log("rs2: ", rs2);
     } catch (error) {
-      console.log('error: ', error);
+      console.log("error: ", error);
     }
-
   },
-  100,
+  300,
   true,
 );
 
