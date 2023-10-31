@@ -41,9 +41,13 @@ const debounceHandle = debounce(
       `\n${Colors.red("[" + (COUNT++) + "] reload")} ${relative_file}: \n`,
     );
     if (pp) {
-      // console.log('kill')
-      // pp.kill('SIGTERM')
-      pp.unref()
+      try {
+        // console.log('kill')
+        pp.kill('SIGTERM')
+        pp.unref()
+      } catch (error) {
+        // console.log(error)
+      }
     }
     const command = new Deno.Command('deno', {
       args: [
