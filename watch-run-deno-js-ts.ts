@@ -1,9 +1,9 @@
-import * as Colors from "https://deno.land/std@0.202.0/fmt/colors.ts";
+import * as Colors from "https://deno.land/std@0.204.0/fmt/colors.ts";
 import {
   basename,
   dirname,
   relative,
-} from "https://deno.land/std@0.202.0/path/mod.ts";
+} from "https://deno.land/std@0.204.0/path/mod.ts";
 
 const __filepath = new URL("", import.meta.url).pathname;
 // console.log("__filepath: ", __filepath);
@@ -15,10 +15,10 @@ const cwd = Deno.cwd();
 // console.log('cwd: ', cwd);
 
 let COUNT = 1;
-let pp: Deno.Process;
+let pp: Deno.ChildProcess;
 
 const debounceHandle = debounce(
-  (event: unknown) => {
+  async (event: unknown) => {
     const {
       paths: [path],
     } = event as Deno.FsEvent;
@@ -41,18 +41,20 @@ const debounceHandle = debounce(
       `\n${Colors.red("[" + (COUNT++) + "] reload")} ${relative_file}: \n`,
     );
     if (pp) {
-      pp.kill('SIGTERM')
-      pp.close()
+      // console.log('kill')
+      // pp.kill('SIGTERM')
+      pp.unref()
     }
-    pp = Deno.run({
-      cmd: [
-        `deno`,
+    const command = new Deno.Command('deno', {
+      args: [
         `run`,
         `-A`,
         `${relative_file}`,
       ],
     });
-    // console.log(pp);
+    pp = command.spawn();
+    // const status = await pp.status;
+    // console.log('status: ', status);
   },
   100,
   true,

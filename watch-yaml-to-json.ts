@@ -1,10 +1,10 @@
-import * as Colors from "https://deno.land/std@0.202.0/fmt/colors.ts";
+import * as Colors from "https://deno.land/std@0.204.0/fmt/colors.ts";
 import {
   basename,
   dirname,
   relative,
-} from "https://deno.land/std@0.202.0/path/mod.ts";
-import * as YAML from "https://deno.land/std@0.202.0/yaml/mod.ts";
+} from "https://deno.land/std@0.204.0/path/mod.ts";
+import * as YAML from "https://deno.land/std@0.204.0/yaml/mod.ts";
 const __filepath = new URL("", import.meta.url).pathname;
 // console.log("__filepath: ", __filepath);
 const __filename = basename(__filepath);
