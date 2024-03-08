@@ -14,7 +14,8 @@ const __dirname = dirname(__filepath);
 const cwd = Deno.cwd();
 // console.log('cwd: ', cwd);
 
-const outFile = `${__dirname}/04-rust/rs-out-tmp`
+const tmpdir = Deno.makeTempDirSync()
+const outFile = `${tmpdir}/rs-out-tmp`
 
 let COUNT = 1;
 let pp: Deno.ChildProcess;
@@ -40,7 +41,7 @@ const debounceHandle = debounce(
     }
 
     console.log(
-      `\n${Colors.red("[" + (COUNT++) + "] reload")} ${relative_file}: \n`,
+      `\n${Colors.red("[" + (COUNT++) + "] reload")} ${relative_file}: \n${outFile}\n`,
     );
     if (pp) {
       try {
